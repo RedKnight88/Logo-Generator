@@ -1,0 +1,29 @@
+{
+  "name": "logo-generator",
+  "version": "1.0.0",
+  "description": "generates svg logos",
+  "main": "index.js",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RedKnight88/Logo-Generator.git"
+  },
+  "author": "RedKnight88",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RedKnight88/Logo-Generator/issues"
+  },
+  "homepage": "https://github.com/RedKnight88/Logo-Generator#readme",
+  "dependencies": {
+    "inquirer": "^9.2.12"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
