@@ -3,7 +3,7 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 
 const colors = ["aqua", "black", "blue", "fuchsia", "gray", "green", "lime", "maroon", "navy", "olive", "purple", "red", "silver", "teal", "white", "yellow"];
-const hexPattern = new RegExp('([A-F0-9]+$)');
+const hexPattern = new RegExp('(^[A-F0-9]+$)');
 
 function initiatePrompts() {
     inquirer
@@ -41,22 +41,22 @@ function initiatePrompts() {
 
 function errorChecker(inputs) {
     if(inputs.logoText.length > 3) {
-        throw new Error('Please only input three or less characters')
+        throw new Error('ERROR: Please only input three or less characters')
     }
 
-    let isTextKeyword = colors.filter((color) => {
-        return color == inputs.textColor;
-    })
-    let isLogoKeyword = colors.filter((color) => {
-        return color == inputs.logoColor;
-    })
+    let isTextKeyword = inputs.textColor == colors.filter((color) => {return color == inputs.textColor;})
+    let isLogoKeyword = inputs.logoColor == colors.filter((color) => {return color == inputs.logoColor;})
 
-    if(hexPattern.test(inputs.textColor) || !isTextKeyword) {
-        throw new Error('Please input the text color as either a hexadecimal value (no #) or a common color (in lowercase).')
+    let isTextHex = hexPattern.test(inputs.textColor) && inputs.textColor.length == 6;
+    let isLogoHex = hexPattern.test(inputs.logoColor) && inputs.logoColor.length == 6;
+
+    if(!isTextHex && !isTextKeyword) {
+        throw new Error('ERROR: Please input the text color as either a hexadecimal value (no #) or a common color (in lowercase).')
     }
-    if(hexPattern.test(inputs.logoColor) || !isLogoKeyword) {
-        throw new Error('Please input the logo color as either a hexadecimal value (no #) or a common color (in lowercase).')
+    if(!isLogoHex && !isLogoKeyword) {
+        throw new Error('ERROR: Please input the logo color as either a hexadecimal value (no #) or a common color (in lowercase).')
     }
+    return;
 }
 
 function generateSVG(data) {
@@ -87,3 +87,5 @@ function generateSVG(data) {
 }
 
 initiatePrompts();
+
+module.exports = errorChecker;
